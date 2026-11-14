@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OFFBEAT</title>
+<meta name="description" content="OFFBEAT: ten NISAR radar passes over the farmland of Herat, Afghanistan. Which land had a growing season, and which patches did not follow the fields beside them.">
+<!-- Structure only. Styles are in css/style.css; behaviour is in js/, loaded in order at the bottom.
+     AI acknowledgment: this page was written with the assistance of Claude, an AI model made by
+     Anthropic, and reviewed by the project author. See README.md in the repository. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="mark" href="#top" aria-label="OFFBEAT, back to top">
+      <svg width="26" height="18" viewBox="0 0 26 18" aria-hidden="true"><path d="M1 13 L6 13 L9 4 L13 13 L17 13" fill="none" stroke="#45b9a4" stroke-width="2" stroke-linejoin="round"/><path d="M17 13 L20 8 L25 8" fill="none" stroke="#f0a04a" stroke-width="2" stroke-linejoin="round"/></svg>
+      OFFBEAT</a>
+    <nav aria-label="Sections">
+      <a href="#map">Explore the map</a>
+      <a href="#places">Places to look first</a>
+      <a href="#orbit">In orbit</a>
+      <a href="#evidence">How far the evidence goes</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<div class="wrap">
+  <div class="intro">
+    <p class="eyebrow">NISAR radar · Herat, Afghanistan · 19 June to 17 October 2026</p>
+    <div class="hero">
+    <h1>Which fields kept growing through a summer with no rain?</h1>
+    <p class="lede">Around Herat it does not rain from June to October, so land that grows a crop in those months
+      is getting water from somewhere. NASA and ISRO's NISAR radar sees through cloud and dust and passed over the
+      valley ten times. OFFBEAT reads those ten passes hectare by hectare and marks the patches whose season ran
+      out of step with the fields beside them.</p>
+    </div>
+    <div class="stats" aria-live="polite">
+      <div class="stat"><b id="st-area"></b><span>of farmland studied</span></div>
+      <div class="stat"><b id="st-changed"></b><span>changed strongly: the echo at least doubled</span></div>
+      <div class="stat sub"><b id="st-summer"></b><span>of that reached a summer peak</span></div>
+      <div class="stat sub"><b id="st-early"></b><span>of that peaked early, then faded</span></div>
+      <div class="stat"><b id="st-diff"></b><span id="st-diff-s">moved differently from neighbours</span></div>
+      <div class="stat"><b>10</b><span>radar passes, twelve days apart</span></div>
+    </div>
+    <p class="statnote" id="statnote"></p>
+  </div>
+
+  <section id="map" aria-label="Explore the map">
+    <div class="work">
+      <div class="card">
+        <div class="maphead">
+          <span class="lab" id="lab-view">Show</span>
+          <div class="seg" role="radiogroup" aria-labelledby="lab-view">
+            <label><input type="radio" name="layer" value="step" checked>Classification</label>
+            <label><input type="radio" name="layer" value="season">Summer season</label>
+            <label><input type="radio" name="layer" value="blocks">5 km blocks</label>
+          </div>
+          <span class="grow"></span>
+          <span class="lab" id="lab-base">Background</span>
+          <div class="seg" role="radiogroup" aria-labelledby="lab-base">
+            <label><input type="radio" name="base" value="sat" checked>Satellite</label>
+            <label><input type="radio" name="base" value="street">Street</label>
+            <label><input type="radio" name="base" value="topo">Terrain</label>
+          </div>
+          <label style="font-size:13px;white-space:nowrap"><input type="checkbox" id="names" checked> Place names</label>
+        </div>
+        <div id="lmap" role="application" aria-label="Map of the Herat valley. Each coloured square is one hectare. Click a square to see its ten radar measurements."></div>
+        <div class="mapfoot">
+          <div class="thr">
+            <span class="lab">Activity threshold</span>
+            <p style="margin-top:4px">A hectare counts as changed when its echo grows at least <b class="num" id="thr-v"></b></p>
+            <input type="range" id="thr" min="2" max="5" step="0.5" value="3" aria-label="Activity threshold in decibels">
+            <div class="row"><button id="thr-reset" disabled>Back to the standard rule</button></div>
+            <p class="hint" style="margin-top:7px">Moving this changes the map and the numbers above. That is deliberate: the result depends on where the line is drawn. The slider keeps the neighbour averages from the standard rule; the full recalculation is under <a href="#evidence">how far the evidence goes</a>.</p>
+          </div>
+          <div>
+            <span class="lab">Go to</span>
+            <div class="row" style="margin-top:6px">
+              <input type="text" id="goto" placeholder="34.33, 62.05" aria-label="Latitude and longitude, for example 34.33, 62.05">
+              <button id="goto-b">Go</button>
+              <button id="goto-city">Herat city</button>
+              <button id="goto-all">Whole valley</button>
+            </div>
+            <p class="hint" id="goto-msg" style="margin-top:6px">Type a latitude and longitude to jump to the nearest hectare.</p>
+            <div class="row" style="margin-top:12px"><label class="hint" for="alpha">Overlay strength</label><input type="range" id="alpha" min="0.15" max="1" step="0.05" value="0.85" style="width:130px"></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="card detail" id="detail" aria-label="Selected hectare">
+        <div class="empty" id="empty">
+          <h2>Pick a hectare</h2>
+          <p>Each coloured square on the map is 100 m by 100 m. Click one to see what the radar recorded there on each of the ten passes, how that compares with the fields around it, and what it might mean.</p>
+          <p style="margin-top:10px">Or start with an example:</p>
+          <div class="row">
+            <button data-ex="step">A field in step</button>
+            <button data-ex="off">One out of step</button>
+            <button data-ex="quiet">Quiet ground</button>
+          </div>
+        </div>
+        <div id="full" hidden>
+          <div class="dhead">
+            <button class="closex" id="closex" aria-label="Close details">Close</button>
+            <span class="chip" id="chip"><i></i><span id="chip-t"></span></span>
+            <p class="where" id="where"></p>
+            <p class="coord" id="coord"></p>
+            <p class="verdict" id="verdict"></p>
+          </div>
+          <div class="dsec">
+            <div class="row" style="justify-content:space-between;margin-bottom:6px">
+              <h3 style="margin:0">Radar history</h3>
+              <div class="seg" role="radiogroup" aria-label="Radar channel">
+                <label><input type="radio" name="ch" value="hv" checked>HV</label>
+                <label><input type="radio" name="ch" value="hh">HH</label>
+              </div>
+            </div>
+            <div class="chartbox">
+              <svg id="chart" viewBox="0 0 400 232" role="img" aria-labelledby="chart-d"></svg>
+              <div class="tip" id="tip" hidden></div>
+            </div>
+            <p id="chart-d" class="hint" style="margin-top:2px"></p>
+            <div class="key" id="key"></div>
+          </div>
+          <div class="dsec">
+            <h3>Listen to the season</h3>
+            <p class="hint">The beeps follow the shape of the line: fast while the echo climbs, slow while it falls, a steady tick when nothing changes, and uneven timing when the patch keeps reversing.</p>
+            <div class="row" style="margin-top:9px">
+              <button class="go" id="play" aria-pressed="false">▶ Play</button>
+              <button id="replay">↺ From the start</button>
+            </div>
+            <p class="now" id="now" aria-live="polite"></p>
+          </div>
+          <div class="dsec">
+            <h3>Evidence</h3>
+            <div class="ev">
+              <div class="m"><b>MEASURED · what the radar recorded</b><span id="ev-m"></span></div>
+              <div class="c"><b>CALCULATED · what we worked out from it</b><span id="ev-c"></span></div>
+              <div class="h"><b>HYPOTHESIS · what it might mean, not proven</b><span id="ev-h"></span></div>
+            </div>
+          </div>
+          <div class="dsec">
+            <details>
+              <summary>The ten measurements</summary>
+              <div class="scroll"><table id="nums"></table></div>
+              <p class="hint" style="margin-top:8px" id="nums-n"></p>
+            </details>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="sec" id="places">
+    <h2>Places to look first</h2>
+    <p class="sub">These are groups of touching hectares that changed strongly but did not follow the changing fields around them.
+      The radar cannot say why. Each one is a question for someone who can go and look, starting with the largest.</p>
+    <div class="places" id="place-list"></div>
+    <div class="row" style="margin-top:14px"><button id="place-more"></button><span class="hint" id="place-n"></span></div>
+  </section>
+
+  <section class="sec" id="orbit">
+    <h2>How this would run in orbit</h2>
+    <p class="sub">Ten radar scenes are about 70 GB. The answer a survey team needs is a short list of places. A satellite that
+      did the reduction on board could send the list and skip the rest. Below, the same method runs one pass at a time,
+      keeping only a small running summary and using nothing from later passes.</p>
+    <div class="funnel">
+      <div><b>≈ 70 GB</b><span>ten radar scenes, about 7 GB each</span></div>
+      <div><b id="or-state"></b><span>running summary kept between passes, whole valley</span></div>
+      <div><b id="or-msg"></b><span>message to the ground after the last pass</span></div>
+    </div>
+    <div class="orbit">
+      <div class="card pad">
+        <canvas id="mini" aria-label="The valley as classified after the selected pass"></canvas>
+        <div class="tl" id="tl" role="group" aria-label="Radar passes"></div>
+        <div class="row" style="margin-top:8px">
+          <button class="go" id="or-play">▶ Replay the season</button>
+          <span class="hint" id="or-lab" aria-live="polite"></span>
+        </div>
+      </div>
+      <div class="card pad">
+        <span class="lab">After this pass</span>
+        <dl class="kv">
+          <dt>Raw radar data seen so far</dt><dd id="or-raw"></dd>
+          <dt>Kept on board</dt><dd id="or-keep"></dd>
+          <dt>Places flagged</dt><dd id="or-places"></dd>
+          <dt>Message size</dt><dd id="or-bytes"></dd>
+        </dl>
+        <p class="hint" id="or-note" style="margin-top:12px"></p>
+        <p class="flag"><b>A browser demonstration of a proposed design.</b> It runs here on the real measurements. It has not run on a satellite, and NISAR does not host outside software.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="evidence">
+    <h2>How far the evidence goes</h2>
+    <p class="sub">OFFBEAT finds radar change and compares its timing between neighbours. It is not a drought map, an irrigation
+      detector or a crop map. These are the limits to keep in mind while reading the map.</p>
+
+    <div class="card pad" style="margin-top:18px">
+      <span class="lab">The answer moves with the rule</span>
+      <p style="margin-top:6px;max-width:74ch">Each bar is the farmland that counts as changed under one version of the rule, fully recalculated. The standard rule is one reasonable choice, not the only one.</p>
+      <div class="bars" id="bars"></div>
+      <p class="hint" id="fa" style="margin-top:14px"></p>
+      <details style="margin-top:10px"><summary>All the variations we tested</summary><div class="scroll"><table id="sens"></table></div></details>
+    </div>
+
+    <div class="limits">
+      <div class="card limit">
+        <span class="status">Not yet validated</span>
+        <h3>Nothing here has been checked against independent data</h3>
+        <p>The numbers are what the radar measured under a stated rule. They are not yet confirmed on the ground or against other satellites, and no ground records exist for Herat.</p>
+      </div>
+      <div class="card limit">
+        <h3>Fields that fail together look normal</h3>
+        <div id="fail-svg"></div>
+        <p>A hectare is only compared with its neighbours. If a whole area lost its water, every field would look like the next one and nothing would be marked.</p>
+      </div>
+      <div class="card limit">
+        <h3>Radar change does not prove irrigation</h3>
+        <p>The echo rises when plants grow, and also when soil gets wetter or rougher. A summer peak fits a watered crop, but the radar cannot tell us the cause. That is why every interpretation on this page is labelled a hypothesis.</p>
+      </div>
+      <div class="card limit">
+        <h3>Grey does not mean no farming</h3>
+        <p>Orchards and vineyards look much the same to the radar all summer, so they stay grey. So does land harvested before the first pass on 19 June.</p>
+      </div>
+      <div class="card limit">
+        <h3>One season, one missing pass</h3>
+        <p>There is no earlier year to compare with, so a normal summer is unknown. The pass of 6 August is not in the archive and is not filled in. The data are marked provisional by NASA.</p>
+      </div>
+      <div class="card limit">
+        <h3>What would settle it</h3>
+        <p><b>Sentinel-2 greenness:</b> were plants visibly growing where the radar says a season happened? <b>NASA rainfall (GPM):</b> was it dry before each pass, so that rain can be ruled out? Both checks are planned and their results will be reported as they come out, including the misses.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="foot">
+  <div class="wrap">
+    <div><h3>Data</h3><p>NISAR L-band GCOV, path 70 frame 19, provisional Level-2 products from NASA's Alaska Satellite Facility. NISAR is a joint NASA and ISRO mission. Radar power is averaged from 10 m to 100 m cells, and the scene-wide brightness shift on each date is removed.</p></div>
+    <div><h3>Method</h3><p>A hectare changed when its HV echo at least doubled between its weakest and strongest pass. A summer peak is strongest on 18 August or later; an early peak is strongest in June or July. A hectare is in step when its ten values rise and fall with the average of at least four changed hectares within about half a kilometre. The comparison follows the reasoning of Bazzi et al. (2019), who used it with Sentinel-1 in Catalonia.</p></div>
+    <div><h3>About</h3><p>OFFBEAT is a prototype for the NASA Space Apps Challenge 2026, challenge "Dancing with the SARs". Built with the assistance of Claude, an AI model made by Anthropic. No individual farms or people are identified; the smallest unit shown is one hectare.</p></div>
+  </div>
+</footer>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="data.js"></script>
+<script src="js/core.js"></script>
+<script src="js/map.js"></script>
+<script src="js/detail.js"></script>
+<script src="js/sound.js"></script>
+<script src="js/orbit.js"></script>
+<script src="js/sections.js"></script>
+</body>
+</html>
