@@ -1,0 +1,121 @@
+{
+ "generated": "2026-11-14",
+ "dates": [
+  "2026-06-19",
+  "2026-07-01",
+  "2026-07-13",
+  "2026-07-25",
+  "2026-08-18",
+  "2026-08-30",
+  "2026-09-11",
+  "2026-09-23",
+  "2026-10-05",
+  "2026-10-17"
+ ],
+ "epsg": 32641,
+ "rules": {
+  "threshold_db": 3.0,
+  "doubling": 2.0,
+  "summer_from": "2026-08-18",
+  "match_out": 0.3,
+  "neighbour_radius_cells": 5,
+  "min_neighbours": 4,
+  "min_patch_ha": 2
+ },
+ "scene_shift_db": [
+  -0.56,
+  -0.24,
+  -0.35,
+  -0.07,
+  0.07,
+  -0.33,
+  0.62,
+  0.43,
+  0.07,
+  0.35
+ ],
+ "farmland_cells": 43529,
+ "farmland_km2": 435.3,
+ "changed_km2": 53.7,
+ "changed_percent": 12.3,
+ "summer_km2": 32.6,
+ "early_km2": 21.0,
+ "comparable_cells": 5153,
+ "isolated_km2": 2.1,
+ "out_of_step_km2": 8.8,
+ "out_of_step_percent_of_comparable": 17.0,
+ "places": 163,
+ "places_4ha": 32,
+ "single_cells": 416,
+ "false_alarm": {
+  "bare_cells": 900,
+  "passed": 0,
+  "largest_swing_db": 1.82
+ },
+ "sensitivity": [
+  {
+   "rule": "standard: 3.0 dB, match < 0.3",
+   "changed": 53.7,
+   "summer": 32.6,
+   "early": 21.0,
+   "out_of_step": 8.8,
+   "places": 163
+  },
+  {
+   "rule": "threshold 2.5 dB",
+   "changed": 84.8,
+   "summer": 54.2,
+   "early": 30.6,
+   "out_of_step": 15.5,
+   "places": 260
+  },
+  {
+   "rule": "threshold 3.5 dB",
+   "changed": 34.2,
+   "summer": 19.2,
+   "early": 15.0,
+   "out_of_step": 4.4,
+   "places": 65
+  },
+  {
+   "rule": "match < 0.2",
+   "changed": 53.7,
+   "summer": 32.6,
+   "early": 21.0,
+   "out_of_step": 7.4,
+   "places": 139
+  },
+  {
+   "rule": "match < 0.4",
+   "changed": 53.7,
+   "summer": 32.6,
+   "early": 21.0,
+   "out_of_step": 10.0,
+   "places": 180
+  },
+  {
+   "rule": "summer from 30 Aug",
+   "changed": 53.7,
+   "summer": 29.5,
+   "early": 24.2,
+   "out_of_step": 8.8,
+   "places": 163
+  },
+  {
+   "rule": "summer from 25 Jul",
+   "changed": 53.7,
+   "summer": 34.1,
+   "early": 19.5,
+   "out_of_step": 8.8,
+   "places": 163
+  },
+  {
+   "rule": "strict: 3 dB ignoring best and worst date",
+   "changed": 22.4,
+   "summer": 14.0,
+   "early": 8.3,
+   "out_of_step": 2.2,
+   "places": 37
+  }
+ ]
+}
