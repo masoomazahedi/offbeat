@@ -1,0 +1,31 @@
+# Radar data: large, and regenerable with the scripts
+data/
+*.npz
+*.h5
+*.tif
+
+# The answers to the blind validation check. Never commit before the check is done.
+answer_key*
+*answer_key*
+check_points.json
+
+# Credentials. Never commit these.
+.netrc
+_netrc
+.dodsrc
+*.env
+
+# Paperwork that is not part of the project
+*.pdf
+!docs/demo.pdf
+
+# Python, editors, OS
+.venv/
+venv/
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store
