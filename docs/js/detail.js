@@ -8,6 +8,7 @@ function select(i) {
   S.sel = i;
   stopSound(true);
   $('empty').hidden = true;
+  $('rule-note').hidden = true; // set again by showPlace() when a rule is switched on
   $('full').hidden = false;
   $('detail').classList.add('open');
   ringO.setLatLng([LAT[i], LON[i]]).addTo(map);

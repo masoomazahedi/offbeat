@@ -95,6 +95,36 @@ def main():
                            lon=round(float(G[i] @ clon), 4),
                            k=round(float(match[m].mean()), 2)))
 
+    # --- the same list under the other rules the page lets the reader switch on --
+    # Each list is recomputed in full, exactly as src/3_analyse.py does it: a new
+    # set of changed hectares, a new neighbour average, new matches, new places.
+    ordered = np.sort(db, axis=2)
+    strict_swing = ordered[:, :, -2] - ordered[:, :, 1]
+    rule_places = {}
+    for key, threshold, base in [("loose", 2.5, aoi), ("standard", THRESHOLD_DB, aoi),
+                                 ("strict", 3.5, aoi),
+                                 ("strictest", -1e9, aoi & (strict_swing >= THRESHOLD_DB))]:
+        r_active = base & (swing >= threshold)
+        r_ref, r_count = neighbour_reference(db, r_active, NEIGHBOUR_RADIUS)
+        r_match = correlation(db, r_ref)
+        r_out = r_active & (r_count >= MIN_NEIGHBOURS) & (r_match < MATCH_OUT)
+        r_lab, r_sizes = label_patches(r_out)
+        lst = []
+        for j in np.argsort(-r_sizes, kind="stable")[: int((r_sizes >= MIN_PATCH_CELLS).sum())]:
+            m = r_lab == (j + 1)
+            pr, pc = np.nonzero(m)
+            mid = len(pr) // 2
+            # Point at a hectare the map also draws as out of step, when the place
+            # has one; otherwise at its middle hectare.
+            also = np.nonzero(out[pr, pc])[0]
+            pick = int(also[np.abs(also - mid).argmin()]) if len(also) else mid
+            i = int(idx[pr[pick], pc[pick]])
+            lst.append(dict(i=i, ha=int(m.sum()), k=round(float(r_match[m].mean()), 2)))
+        # The standard list is the one already built above; keep that exact list.
+        rule_places[key] = ([dict(i=q["i"], ha=q["ha"], k=q["k"]) for q in places]
+                            if key == "standard" else lst)
+        print(f"rule {key:9s}: {len(rule_places[key])} places")
+
     data = dict(
         dates=DATES, n=int(len(rr)), rows=int(rows), cols=int(cols),
         noise=round(noise, 2),
@@ -104,7 +134,7 @@ def main():
         hv=b64(np.round(db[rr, cc, :] * 100).ravel()),
         hh=b64(np.round(db_hh[rr, cc, :] * 100).ravel()),
         nb=b64(np.round(ref[rr, cc, :] * 100).ravel()),
-        places=places)
+        places=places, rule_places=rule_places)
     # the page writes distances from the city centre, so give it that grid position.
     # The city itself is not farmland, so locate it on the full grid, not among the cells.
     fwd = Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True)

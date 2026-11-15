@@ -210,8 +210,10 @@ function renderStats() {
     'moved differently from neighbours' + (S.thr === STD ? `, in ${D.places.length} places` : '');
   $('thr-v').textContent = `${times(S.thr).toFixed(1)} times (${S.thr.toFixed(1)} dB)`;
   $('thr-reset').disabled = S.thr === STD;
+  // Nothing is said while the standard rule is in force; the warning appears only
+  // once the reader moves the slider, because the numbers then differ from the standard.
   $('statnote').innerHTML =
     S.thr === STD
-      ? 'Measured under the standard rule. Not yet validated against independent data.'
+      ? ''
       : `<b>You changed the rule.</b> These numbers are for a threshold of ${S.thr.toFixed(1)} dB, not the standard ${STD.toFixed(1)} dB.`;
 }

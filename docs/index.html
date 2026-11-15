@@ -14,19 +14,38 @@
 </head>
 <body>
 
-<header class="bar">
-  <div class="wrap">
-    <a class="mark" href="#top" aria-label="OFFBEAT, back to top">
-      <svg width="26" height="18" viewBox="0 0 26 18" aria-hidden="true"><path d="M1 13 L6 13 L9 4 L13 13 L17 13" fill="none" stroke="#45b9a4" stroke-width="2" stroke-linejoin="round"/><path d="M17 13 L20 8 L25 8" fill="none" stroke="#f0a04a" stroke-width="2" stroke-linejoin="round"/></svg>
-      OFFBEAT</a>
-    <nav aria-label="Sections">
-      <a href="#map">Explore the map</a>
-      <a href="#places">Places to look first</a>
-      <a href="#orbit">In orbit</a>
-      <a href="#evidence">How far the evidence goes</a>
-    </nav>
-  </div>
+<!-- Phone only: a slim bar with the menu button. On a wide screen the sidebar is always visible. -->
+<header class="topbar">
+  <button class="menu" id="menu" type="button" aria-controls="side" aria-expanded="false" aria-label="Open menu">
+    <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <a class="mark" href="#top" aria-label="OFFBEAT, back to top">
+    <svg width="26" height="18" viewBox="0 0 26 18" aria-hidden="true"><path d="M1 13 L6 13 L9 4 L13 13 L17 13" fill="none" stroke="#45b9a4" stroke-width="2" stroke-linejoin="round"/><path d="M17 13 L20 8 L25 8" fill="none" stroke="#f0a04a" stroke-width="2" stroke-linejoin="round"/></svg>
+    OFFBEAT</a>
 </header>
+
+<!-- Left sidebar: logo on top, section links, image at the bottom. -->
+<aside class="side" id="side">
+  <a class="brand" href="#top" aria-label="OFFBEAT, back to top">
+    <svg width="64" height="44" viewBox="0 0 26 18" aria-hidden="true"><path d="M1 13 L6 13 L9 4 L13 13 L17 13" fill="none" stroke="#45b9a4" stroke-width="1.6" stroke-linejoin="round"/><path d="M17 13 L20 8 L25 8" fill="none" stroke="#f0a04a" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    <span class="name">OFFBEAT</span>
+    <span class="tag">Ten radar passes over the farmland of Herat</span>
+  </a>
+  <nav aria-label="Sections">
+    <a href="#top" data-sec="top">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 9.5 10 3l7 6.5V17h-4.5v-5h-5v5H3z" fill="currentColor"/></svg>Overview</a>
+    <a href="#map" data-sec="map">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2a6 6 0 0 0-6 6c0 4.2 6 10 6 10s6-5.8 6-10a6 6 0 0 0-6-6zm0 8.2A2.2 2.2 0 1 1 10 5.8a2.2 2.2 0 0 1 0 4.4z" fill="currentColor"/></svg>Explore the map</a>
+    <a href="#places" data-sec="places">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 4h14v2.6H3zm0 4.7h14v2.6H3zm0 4.7h9v2.6H3z" fill="currentColor"/></svg>Places to look first</a>
+    <a href="#filter" data-sec="filter">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 17V10h3v7zm5.5 0V3h3v14zM14 17V7h3v10z" fill="currentColor"/></svg>Filter by rule</a>
+    <a href="#orbit" data-sec="orbit">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><ellipse cx="10" cy="10" rx="8" ry="3.6" transform="rotate(-30 10 10)" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="10" cy="10" r="2.6" fill="currentColor"/></svg>In orbit</a>
+  </nav>
+  <div class="sideimg"><p class="aicred">Illustration: AI-generated</p></div>
+</aside>
+<div class="scrim" id="scrim" hidden></div>
 
 <main id="top">
 <div class="wrap">
@@ -76,7 +95,7 @@
             <p style="margin-top:4px">A hectare counts as changed when its echo grows at least <b class="num" id="thr-v"></b></p>
             <input type="range" id="thr" min="2" max="5" step="0.5" value="3" aria-label="Activity threshold in decibels">
             <div class="row"><button id="thr-reset" disabled>Back to the standard rule</button></div>
-            <p class="hint" style="margin-top:7px">Moving this changes the map and the numbers above. That is deliberate: the result depends on where the line is drawn. The slider keeps the neighbour averages from the standard rule; the full recalculation is under <a href="#evidence">how far the evidence goes</a>.</p>
+            <p class="hint" style="margin-top:7px">Moving this changes the map and the numbers above. That is deliberate: the result depends on where the line is drawn. The slider keeps the neighbour averages from the standard rule; the full recalculation is under <a href="#filter">Filter by rule</a>.</p>
           </div>
           <div>
             <span class="lab">Go to</span>
@@ -98,9 +117,9 @@
           <p>Each coloured square on the map is 100 m by 100 m. Click one to see what the radar recorded there on each of the ten passes, how that compares with the fields around it, and what it might mean.</p>
           <p style="margin-top:10px">Or start with an example:</p>
           <div class="row">
-            <button data-ex="step">A field in step</button>
-            <button data-ex="off">One out of step</button>
-            <button data-ex="quiet">Quiet ground</button>
+            <button class="ex step" data-ex="step">A field in step</button>
+            <button class="ex off" data-ex="off">One out of step</button>
+            <button class="ex quiet" data-ex="quiet">Quiet ground</button>
           </div>
         </div>
         <div id="full" hidden>
@@ -110,6 +129,7 @@
             <p class="where" id="where"></p>
             <p class="coord" id="coord"></p>
             <p class="verdict" id="verdict"></p>
+            <p class="rulenote" id="rule-note" hidden></p>
           </div>
           <div class="dsec">
             <div class="row" style="justify-content:space-between;margin-bottom:6px">
@@ -150,6 +170,14 @@
               <p class="hint" style="margin-top:8px" id="nums-n"></p>
             </details>
           </div>
+          <div class="dsec">
+            <span class="lab">Jump to an example</span>
+            <div class="row" style="margin-top:8px">
+              <button class="ex step" data-ex="step">A field in step</button>
+              <button class="ex off" data-ex="off">One out of step</button>
+              <button class="ex quiet" data-ex="quiet">Quiet ground</button>
+            </div>
+          </div>
         </div>
       </aside>
     </div>
@@ -159,8 +187,39 @@
     <h2>Places to look first</h2>
     <p class="sub">These are groups of touching hectares that changed strongly but did not follow the changing fields around them.
       The radar cannot say why. Each one is a question for someone who can go and look, starting with the largest.</p>
+    <div class="pick">
+      <label for="place-count">Number of places to show, largest first</label>
+      <input type="number" id="place-count" class="num" min="1" inputmode="numeric" aria-describedby="place-n">
+      <span class="hint" id="place-n"></span>
+    </div>
+    <!-- Shown only on the printed page. -->
+    <div class="print-head">
+      <h1>OFFBEAT: places to look first</h1>
+      <p id="print-sum"></p>
+      <p>What the radar measured under the stated rules. Not yet validated against independent data. The radar cannot
+        say why a place is out of step; each card is a question for someone who can go and look.</p>
+    </div>
     <div class="places" id="place-list"></div>
-    <div class="row" style="margin-top:14px"><button id="place-more"></button><span class="hint" id="place-n"></span></div>
+    <div class="row printrow">
+      <button class="go" id="place-print" type="button"></button>
+      <span class="hint">Opens your browser's print window. Choose "Save as PDF" as the printer to get a PDF file.</span>
+    </div>
+  </section>
+
+  <section class="sec" id="filter">
+    <h2>Filter by rule</h2>
+    <p class="sub">OFFBEAT finds radar change and compares its timing between neighbours. It is not a drought map, an irrigation
+      detector or a crop map. Here is how the answer moves when the rule moves.</p>
+
+    <div class="card pad" style="margin-top:18px">
+      <span class="lab">The answer moves with the rule</span>
+      <div class="row applyrow">
+        <button class="go" id="rule-apply" type="button">Filter the places</button>
+        <span class="hint" id="rule-msg" aria-live="polite"></span>
+      </div>
+      <div class="bars" id="bars"></div>
+      <details style="margin-top:14px"><summary>All the variations we tested</summary><div class="scroll"><table id="sens"></table></div></details>
+    </div>
   </section>
 
   <section class="sec" id="orbit">
@@ -195,56 +254,13 @@
       </div>
     </div>
   </section>
-
-  <section class="sec" id="evidence">
-    <h2>How far the evidence goes</h2>
-    <p class="sub">OFFBEAT finds radar change and compares its timing between neighbours. It is not a drought map, an irrigation
-      detector or a crop map. These are the limits to keep in mind while reading the map.</p>
-
-    <div class="card pad" style="margin-top:18px">
-      <span class="lab">The answer moves with the rule</span>
-      <p style="margin-top:6px;max-width:74ch">Each bar is the farmland that counts as changed under one version of the rule, fully recalculated. The standard rule is one reasonable choice, not the only one.</p>
-      <div class="bars" id="bars"></div>
-      <p class="hint" id="fa" style="margin-top:14px"></p>
-      <details style="margin-top:10px"><summary>All the variations we tested</summary><div class="scroll"><table id="sens"></table></div></details>
-    </div>
-
-    <div class="limits">
-      <div class="card limit">
-        <span class="status">Not yet validated</span>
-        <h3>Nothing here has been checked against independent data</h3>
-        <p>The numbers are what the radar measured under a stated rule. They are not yet confirmed on the ground or against other satellites, and no ground records exist for Herat.</p>
-      </div>
-      <div class="card limit">
-        <h3>Fields that fail together look normal</h3>
-        <div id="fail-svg"></div>
-        <p>A hectare is only compared with its neighbours. If a whole area lost its water, every field would look like the next one and nothing would be marked.</p>
-      </div>
-      <div class="card limit">
-        <h3>Radar change does not prove irrigation</h3>
-        <p>The echo rises when plants grow, and also when soil gets wetter or rougher. A summer peak fits a watered crop, but the radar cannot tell us the cause. That is why every interpretation on this page is labelled a hypothesis.</p>
-      </div>
-      <div class="card limit">
-        <h3>Grey does not mean no farming</h3>
-        <p>Orchards and vineyards look much the same to the radar all summer, so they stay grey. So does land harvested before the first pass on 19 June.</p>
-      </div>
-      <div class="card limit">
-        <h3>One season, one missing pass</h3>
-        <p>There is no earlier year to compare with, so a normal summer is unknown. The pass of 6 August is not in the archive and is not filled in. The data are marked provisional by NASA.</p>
-      </div>
-      <div class="card limit">
-        <h3>What would settle it</h3>
-        <p><b>Sentinel-2 greenness:</b> were plants visibly growing where the radar says a season happened? <b>NASA rainfall (GPM):</b> was it dry before each pass, so that rain can be ruled out? Both checks are planned and their results will be reported as they come out, including the misses.</p>
-      </div>
-    </div>
-  </section>
 </div>
 
 <footer class="foot">
   <div class="wrap">
     <div><h3>Data</h3><p>NISAR L-band GCOV, path 70 frame 19, provisional Level-2 products from NASA's Alaska Satellite Facility. NISAR is a joint NASA and ISRO mission. Radar power is averaged from 10 m to 100 m cells, and the scene-wide brightness shift on each date is removed.</p></div>
     <div><h3>Method</h3><p>A hectare changed when its HV echo at least doubled between its weakest and strongest pass. A summer peak is strongest on 18 August or later; an early peak is strongest in June or July. A hectare is in step when its ten values rise and fall with the average of at least four changed hectares within about half a kilometre. The comparison follows the reasoning of Bazzi et al. (2019), who used it with Sentinel-1 in Catalonia.</p></div>
-    <div><h3>About</h3><p>OFFBEAT is a prototype for the NASA Space Apps Challenge 2026, challenge "Dancing with the SARs". Built with the assistance of Claude, an AI model made by Anthropic. No individual farms or people are identified; the smallest unit shown is one hectare.</p></div>
+    <div><h3>About</h3><p>The two photographs on this page, in the sidebar and behind the heading, are AI-generated illustrations, watermarked as such. They are decoration: they are not satellite imagery, not pictures of Herat, and no result on this page comes from them.</p><p style="margin-top:10px">OFFBEAT is a prototype for the NASA Space Apps Challenge 2026, challenge "Dancing with the SARs". Built with the assistance of Claude, an AI model made by Anthropic. No individual farms or people are identified; the smallest unit shown is one hectare.</p></div>
   </div>
 </footer>
 </main>
@@ -257,5 +273,6 @@
 <script src="js/sound.js"></script>
 <script src="js/orbit.js"></script>
 <script src="js/sections.js"></script>
+<script src="js/nav.js"></script>
 </body>
 </html>
