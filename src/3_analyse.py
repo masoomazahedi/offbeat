@@ -199,10 +199,25 @@ def write_markdown(o):
           "Each pass was levelled by subtracting its own median over land outside the "
           "farmland, in dB: " + ", ".join(
               f"{d[5:]} {v:+.2f}" for d, v in zip(o["dates"], o["scene_shift_db"])) + ".\n",
-          "## Not validated\n",
-          "These numbers are what the radar measured under the stated rules. Nothing "
-          "here has been checked against optical imagery or rainfall records. See "
-          "LIMITS.md and validation/RESULTS.md.\n"]
+          "## How far this has been checked\n",
+          "These numbers are what the radar measured under the stated rules. The "
+          "project is not validated, but it is no longer unchecked.\n",
+          "**Checked.** Twenty hectares were drawn at random and compared against NASA "
+          "optical imagery (HLS Sentinel-2, colour infrared) on 20 June, 19 August and "
+          "18 September 2026, with the calls recorded before the radar's answers were "
+          "opened. Under the strict rule set in advance, **8 of 20 agree**. By class: "
+          "**6 of 8** hectares the radar called a summer peak are visibly green in "
+          "August or September; **2 of 7** it called quiet are bare, so four were green "
+          "and the radar missed real growth; **0 of 5** early peaks passed a rule that "
+          "required them to go bare by late summer, though all five were green in June "
+          "as predicted. The check was AI-assisted rather than done by an independent "
+          "person. Full method, per-point numbers and caveats: validation/RESULTS.md.\n",
+          "**Not checked.** The out-of-step rule, which is this project's main output, "
+          "cannot be confirmed from optical imagery; it needs ground truth. Rainfall "
+          "records (NASA GPM) have not been used, so rain before a pass has not been "
+          "ruled out as a cause of a radar change.\n",
+          "Twenty points is a spot check, not an accuracy figure for the valley. See "
+          "LIMITS.md.\n"]
     (ROOT / "RESULTS.md").write_text("\n".join(t))
 
 

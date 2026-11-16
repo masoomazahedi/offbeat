@@ -1,21 +1,21 @@
 point,latitude,longitude,june_green,augsep_green,image_date_june,image_date_augsep,notes
-1,34.25178,62.46565,,,,,
-2,34.3231,62.03585,,,,,
-3,34.38412,61.98729,,,,,
-4,34.25347,62.44718,,,,,
-5,34.26975,62.45468,,,,,
-6,34.33816,62.28681,,,,,
-7,34.24598,62.4027,,,,,
-8,34.25958,62.26684,,,,,
-9,34.31221,62.02511,,,,,
-10,34.28661,62.41002,,,,,
-11,34.32201,62.00651,,,,,
-12,34.34134,62.07043,,,,,
-13,34.28687,62.01127,,,,,
-14,34.31722,62.10657,,,,,
-15,34.31553,62.56741,,,,,
-16,34.2907,62.04709,,,,,
-17,34.25711,62.30488,,,,,
-18,34.2452,62.56994,,,,,
-19,34.25548,62.18651,,,,,
-20,34.3155,61.97398,,,,,
+1,34.25178,62.46565,green,green,2026-06-20,2026-08-19,"index +0.35 Jun / +0.64 Aug / +0.58 Sep (18 Sep also green); 95-99% of the hectare vegetated; judged from NASA Worldview HLS Sentinel-2 colour infrared by Claude (AI) from pinned screenshots, answer key not seen"
+2,34.3231,62.03585,green,green,2026-06-20,2026-08-19,"index +0.45 Jun / +0.27 Aug / +0.19 Sep; fades while the surroundings rise (+0.30 -> +0.39): looks like an early peak; judged from Worldview HLS Sentinel-2 colour infrared by Claude (AI), answer key not seen"
+3,34.38412,61.98729,not green,not green,2026-06-20,2026-08-19,"index +0.20 Jun / +0.18 Aug / +0.16 Sep, only 18-25% of the hectare vegetated; sparse rather than bare desert, and the surroundings are also thin (+0.13 to +0.17); judged from Worldview HLS Sentinel-2 by Claude (AI), answer key not seen"
+4,34.25347,62.44718,green,green,2026-06-20,2026-08-19,"index +0.30 Jun / +0.52 Aug / +0.50 Sep, 72-99% of the hectare vegetated; rises into summer and holds, slightly above its surroundings throughout; judged from Worldview HLS Sentinel-2 by Claude (AI), answer key not seen"
+5,34.26975,62.45468,not green,green,2026-06-20,2026-08-19,"index +0.18 Jun (20% vegetated) / +0.45 Aug / +0.53 Sep (99%); bare in June then strongly green, and well above its surroundings in September (+0.53 vs +0.28): a clear summer peak; judged from Worldview HLS Sentinel-2 by Claude (AI), answer key not seen"
+6,34.33816,62.28681,green,green,2026-06-20,2026-08-19,"index +0.48 Jun / +0.43 Aug / +0.60 Sep, 89-98% vegetated; roughly double its surroundings (+0.26 to +0.32) on every date, green right through the dry season; judged from Worldview HLS Sentinel-2 by Claude (AI), answer key not seen"
+7,34.24598,62.4027,unclear,green,2026-06-20,2026-08-19,"index +0.27 Jun (59% vegetated: on the threshold, partly vegetated, recorded unclear) / +0.55 Aug / +0.50 Sep (99%); matches its surroundings in June, slightly ahead in summer; judged from Worldview HLS Sentinel-2 by Claude (AI), answer key not seen"
+8,34.25958,62.26684,not green,not green,2026-06-20,2026-08-19,"index +0.08 Jun / +0.11 Aug / +0.09 Sep, only 6% of the hectare vegetated on every date, while the surroundings are green and rising (+0.25 to +0.40): clearly bare ground inside irrigated farmland; judged from Worldview HLS Sentinel-2 by Claude (AI), answer key not seen"
+9,34.31221,62.02511,unclear,green,2026-06-20,2026-08-19,"index +0.19 Jun (26% vegetated, mostly bare) / +0.43 Aug / +0.46 Sep (98-99%); the surroundings stay flat near +0.25 all season while this hectare pulls away: summer peak; judged from Worldview HLS Sentinel-2 by Claude (AI), answer key not seen"
+10,34.28661,62.41002,not green,green,2026-06-20,2026-09-18,"index +0.14 Jun (9% vegetated) / +0.23 Aug (51%, partly green) / +0.36 Sep (81%); a late slow green-up, still climbing in September while the surroundings level off: late summer peak; judged from Worldview HLS Sentinel-2 by Claude (AI), answer key not seen"
+11,34.32201,62.00651,green,green,2026-06-20,2026-08-19,"index +0.46 Jun / +0.35 Aug / +0.40 Sep, 77-93% vegetated; above its surroundings (+0.28 to +0.31) on every date, dips slightly in August then recovers: green all season, possibly two crops or an orchard; judged from Worldview HLS Sentinel-2 by Claude (AI), answer key not seen"
+12,34.34134,62.07043,green,unclear,2026-06-20,2026-08-19,"index +0.36 Jun (76% vegetated, above its surroundings) / +0.24 Aug (54%) / +0.25 Sep (51%); fades to half cover and falls level with its surroundings: an early peak that thins rather than a summer season; judged from Worldview HLS Sentinel-2 by Claude (AI), answer key not seen for the unrecorded points"
+13,34.28687,62.01127,green,green,2026-06-20,2026-08-19,"index +0.39 Jun (71% vegetated) / +0.32 Aug (79%) / +0.24 Sep (44%); above its surroundings in June and August, then falls below them in September: green through summer, harvested late; judged from Worldview HLS Sentinel-2 by Claude (AI)"
+14,34.31722,62.10657,green,green,2026-06-20,2026-08-19,"index +0.27 Jun (66% vegetated, level with its surroundings) / +0.50 Aug (99%, above them at +0.39); strengthens into summer: a summer crop. September not yet checked; judged from Worldview HLS Sentinel-2 by Claude (AI)"
+15,34.31553,62.56741,green,green,2026-06-20,2026-08-19,"index +0.32 Jun / +0.30 Aug / +0.29 Sep, 84-85% vegetated on every date while the surroundings stay at +0.18; almost no seasonal change: looks perennial, an orchard or vineyard rather than an annual crop; judged from Worldview HLS Sentinel-2 by Claude (AI)"
+16,34.2907,62.04709,unclear,green,2026-06-20,2026-08-19,"index +0.23 Jun (38% vegetated, mostly bare) / +0.31 Aug (76%) / +0.38 Sep (81%); climbs steadily while the surroundings stay near +0.23, still rising at the last date: a summer crop; judged from Worldview HLS Sentinel-2 by Claude (AI)"
+17,34.25711,62.30488,green,green,2026-06-20,2026-08-19,"index +0.30 Jun (68% vegetated) / +0.48 Aug (92%) / +0.45 Sep (89%); tracks its surroundings closely (+0.28 / +0.39 / +0.36), slightly ahead throughout: an ordinary irrigated field in step with its neighbours; judged from Worldview HLS Sentinel-2 by Claude (AI)"
+18,34.2452,62.56994,not green,not green,2026-06-20,2026-08-19,"index +0.16 Jun / +0.12 Aug / +0.12 Sep, only 6-9% of the hectare vegetated on every date while the surroundings rise slowly (+0.17 to +0.20): clearly bare all season; judged from Worldview HLS Sentinel-2 by Claude (AI)"
+19,34.25548,62.18651,green,green,2026-06-20,2026-08-19,"index +0.49 Jun (98% vegetated, well above its surroundings at +0.29) / +0.36 Aug (75%) / +0.35 Sep (73%); peaks early then settles to about the level of its neighbours: an early peak that does not go bare; judged from Worldview HLS Sentinel-2 by Claude (AI)"
+20,34.3155,61.97398,not green,not green,2026-06-20,2026-08-19,"index +0.12 Jun / +0.13 Aug / +0.11 Sep, only 6-10% vegetated; its surroundings are also thin (+0.13 to +0.15): bare ground at the dry western edge of the valley; judged from Worldview HLS Sentinel-2 by Claude (AI)"

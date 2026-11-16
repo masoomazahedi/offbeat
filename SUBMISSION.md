@@ -30,13 +30,13 @@ Source code: https://github.com/masoomazahedi/offbeat
 
 **Benefits.** It narrows 435 km² to a list of places, works through cloud and dust, and repeats every twelve days.
 
-**Honest limits.** The result depends on the threshold, which the page lets the viewer move. It cannot see an area that fails together, cannot tell why a patch differs, and covers one season. Validation status: see `validation/RESULTS.md`.
+**Honest limits.** The result depends on the threshold, which the page lets the viewer move. It cannot see an area that fails together, cannot tell why a patch differs, and covers one season. It is not validated: a blind spot check of twenty random hectares against NASA optical imagery agrees 8 of 20 under the strict rule set in advance, with summer peaks holding up best (6 of 8) and four of seven "quiet" hectares turning out to be green, so the method misses real growth. The out-of-step rule itself cannot be confirmed from imagery. Full method and per-point numbers: `validation/RESULTS.md`.
 
 **Tools.** Python (numpy, scipy, h5py, pyproj, earthaccess), Leaflet, plain HTML and JavaScript. Static files, no server.
 
 ## NASA data
 
-NISAR L-band Level-2 GCOV (geocoded polarimetric covariance), provisional products, path 70 frame 19, ten passes from 19 June to 17 October 2026, accessed through NASA's Alaska Satellite Facility with Earthdata login. HH and HV backscatter were read for the Herat window, averaged to 100 m and analysed as time series. NASA Earthdata's SAR guide informed the interpretation of the two channels. (Add here if used: NASA GPM IMERG rainfall; NASA Worldview for the optical check.)
+NISAR L-band Level-2 GCOV (geocoded polarimetric covariance), provisional products, path 70 frame 19, ten passes from 19 June to 17 October 2026, accessed through NASA's Alaska Satellite Facility with Earthdata login. HH and HV backscatter were read for the Herat window, averaged to 100 m and analysed as time series. NASA Earthdata's SAR guide informed the interpretation of the two channels. NASA Worldview was used for the validation spot check, reading the HLS Sentinel-2 colour infrared layer (Harmonized Landsat Sentinel-2, a NASA product) at twenty random hectares on three dates. NASA GPM IMERG rainfall was not used.
 
 ## Space agency partner and other data
 
